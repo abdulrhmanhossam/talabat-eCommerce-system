@@ -22,11 +22,14 @@ public class DbInititalizer : IDbInititalizer
         _dbContext = dbContext;
     }
 
+    public async Task InitializeAsync()
+
     /// <summary>
     /// Ensures the database is migrated and seeded with initial data.
     /// </summary>
     /// <returns>A task representing the asynchronous operation.</returns>
     public async Task Initialize()
+
     {
         try
         {
