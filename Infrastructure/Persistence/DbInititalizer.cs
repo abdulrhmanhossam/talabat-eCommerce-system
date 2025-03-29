@@ -6,15 +6,26 @@ using System.Text.Json;
 
 namespace Persistence;
 
+/// <summary>
+/// Initializes the database by applying pending migrations and seeding data from JSON files.
+/// </summary>
 public class DbInititalizer : IDbInititalizer
 {
     private readonly AppDbContext _dbContext;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DbInititalizer"/> class.
+    /// </summary>
+    /// <param name="dbContext">The application database context.</param>
     public DbInititalizer(AppDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
+    /// <summary>
+    /// Ensures the database is migrated and seeded with initial data.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation.</returns>
     public async Task Initialize()
     {
         try
