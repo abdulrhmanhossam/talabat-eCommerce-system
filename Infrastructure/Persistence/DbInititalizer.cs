@@ -15,7 +15,7 @@ public class DbInititalizer : IDbInititalizer
         _dbContext = dbContext;
     }
 
-    public async Task Initialize()
+    public async Task InitializeAsync()
     {
         try
         {

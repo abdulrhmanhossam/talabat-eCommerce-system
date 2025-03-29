@@ -20,6 +20,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+await InitializeDbAsync(app);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -34,3 +35,11 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+async Task InitializeDbAsync(WebApplication app)
+{
+    using var scope = app.Services.CreateScope();
+    var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInititalizer>();
+    await dbInitializer.InitializeAsync();
+}
