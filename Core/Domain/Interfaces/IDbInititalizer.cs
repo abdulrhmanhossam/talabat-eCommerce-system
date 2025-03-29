@@ -5,13 +5,9 @@
 /// </summary>
 public interface IDbInititalizer
 {
-
-    Task InitializeAsync();
-
     /// <summary>
     /// Performs database initialization tasks including migrations and data seeding
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous operation</returns>
-    Task Initialize();
-
+    Task InitializeAsync();
 }
