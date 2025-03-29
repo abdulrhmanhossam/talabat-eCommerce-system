@@ -36,7 +36,11 @@ app.MapControllers();
 
 app.Run();
 
-
+/// <summary>
+/// Initializes the database within a scoped service provider.
+/// </summary>
+/// <param name="app">The web application instance.</param>
+/// <returns>A task representing the asynchronous operation.</returns>
 async Task InitializeDbAsync(WebApplication app)
 {
     using var scope = app.Services.CreateScope();
