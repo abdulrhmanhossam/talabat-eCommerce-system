@@ -27,7 +27,6 @@ public class DbInititalizer : IDbInititalizer
     /// </summary>
     /// <returns>A task representing the asynchronous operation.</returns>
     public async Task InitializeAsync()
-
     {
         try
         {
