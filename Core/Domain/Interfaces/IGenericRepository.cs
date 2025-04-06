@@ -21,7 +21,7 @@ public interface IGenericRepository<TEntity, TKey> where TEntity : BaseEntity<TK
     /// </summary>
     /// <param name="trackChanges">Indicates whether to track changes on the retrieved entities.</param>
     /// <returns>A collection of entities.</returns>
-    Task<IEnumerable<TEntity>> GetAllAsync(bool trackChanges);
+    Task<IEnumerable<TEntity>> GetAllAsync(bool trackChanges = false);
 
     /// <summary>
     /// Asynchronously adds a new entity to the database.

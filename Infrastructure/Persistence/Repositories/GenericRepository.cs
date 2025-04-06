@@ -51,7 +51,7 @@ public class GenericRepository<TEntity, TKey>
     /// </summary>
     /// <param name="trackChanges">Indicates whether to track changes on the retrieved entities.</param>
     /// <returns>A collection of entities.</returns>
-    public async Task<IEnumerable<TEntity>> GetAllAsync(bool trackChanges)
+    public async Task<IEnumerable<TEntity>> GetAllAsync(bool trackChanges = false)
         => trackChanges ? await _dbContext.Set<TEntity>().ToListAsync()
             : await _dbContext.Set<TEntity>().AsNoTracking().ToListAsync();
 
@@ -60,6 +60,13 @@ public class GenericRepository<TEntity, TKey>
     /// </summary>
     /// <param name="id">The unique identifier of the entity.</param>
     /// <returns>The entity if found; otherwise, null.</returns>
-    public async Task<TEntity?> GetByIdAsync(TKey id)
-        => await _dbContext.Set<TEntity>().FindAsync(id);
+    public async Task<TEntity> GetByIdAsync(TKey id)
+    {
+        var entity = await _dbContext.Set<TEntity>().FindAsync(id);
+        if (entity == null)
+        {
+            throw new InvalidOperationException($"Entity of type {typeof(TEntity).Name} with ID {id} was not found.");
+        }
+        return entity;
+    }
 }
