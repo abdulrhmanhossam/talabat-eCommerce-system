@@ -16,8 +16,8 @@ public class UnitOfWork : IUnitOfWork
         _repositories = new();
     }
 
-    //public async Task<int> SaveChangesAsync()
-    //    => await _dbContext.SaveChangesAsync();
+    public async Task<int> SaveChangesAsync()
+        => await _dbContext.SaveChangesAsync();
 
     public IGenericRepository<TEntity, TKey> GetRepository<TEntity, TKey>() where TEntity : BaseEntity<TKey>
     {
