@@ -20,14 +20,14 @@ public class ProductBrandService : IProductBrandService
     public async Task<ProductBrandDto> GetByIdAsync(int id)
     {
         var productbrand = await _unitOfWork
-            .GetRepository<Product, int>().GetByIdAsync(id);
+            .GetRepository<ProductBrand, int>().GetByIdAsync(id);
         return _mapper.Map<ProductBrandDto>(productbrand);
     }
 
     public async Task<IReadOnlyList<ProductBrandDto>> GetAllAsync()
     {
         var productbrands = await _unitOfWork
-            .GetRepository<Product, int>().GetAllAsync();
+            .GetRepository<ProductBrand, int>().GetAllAsync();
         return _mapper.Map<IReadOnlyList<ProductBrandDto>>(productbrands);
     }
 }
