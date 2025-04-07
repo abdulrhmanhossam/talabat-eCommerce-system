@@ -20,24 +20,24 @@ public interface IProductService
     /// <returns>A task representing the asynchronous operation, with a read-only list of <see cref="ProductDto"/> as the result.</returns>
     Task<IReadOnlyList<ProductDto>> GetAllAsync();
 
-    /// <summary>
-    /// Adds a new product.
-    /// </summary>
-    /// <param name="entity">The product to add.</param>
-    /// <returns>A task representing the asynchronous operation, with the identifier of the newly created product as the result.</returns>
-    Task<int> AddAsync(CreateProductDto entity);
+    ///// <summary>
+    ///// Adds a new product.
+    ///// </summary>
+    ///// <param name="entity">The product to add.</param>
+    ///// <returns>A task representing the asynchronous operation, with the identifier of the newly created product as the result.</returns>
+    //Task<ServiceResponse> AddAsync(CreateProductDto entity);
 
-    /// <summary>
-    /// Updates an existing product.
-    /// </summary>
-    /// <param name="entity">The product to update.</param>
-    /// <returns>A task representing the asynchronous operation, with the identifier of the updated product as the result.</returns>
-    Task<int> UpdateAsync(CreateProductDto entity);
+    ///// <summary>
+    ///// Updates an existing product.
+    ///// </summary>
+    ///// <param name="entity">The product to update.</param>
+    ///// <returns>A task representing the asynchronous operation, with the identifier of the updated product as the result.</returns>
+    //Task<ServiceResponse> UpdateAsync(CreateProductDto entity);
 
-    /// <summary>
-    /// Deletes a product by its identifier.
-    /// </summary>
-    /// <param name="id">The identifier of the product to delete.</param>
-    /// <returns>A task representing the asynchronous operation, with the identifier of the deleted product as the result.</returns>
-    Task<int> DeleteAsync(int id);
+    ///// <summary>
+    ///// Deletes a product by its identifier.
+    ///// </summary>
+    ///// <param name="id">The identifier of the product to delete.</param>
+    ///// <returns>A task representing the asynchronous operation, with the identifier of the deleted product as the result.</returns>
+    //Task<ServiceResponse> DeleteAsync(int id);
 }
