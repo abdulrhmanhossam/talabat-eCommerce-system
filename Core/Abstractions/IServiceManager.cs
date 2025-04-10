@@ -1,4 +1,4 @@
-﻿using Abstractions.Product;
+﻿using Abstractions.Products;
 
 namespace Abstractions;
 

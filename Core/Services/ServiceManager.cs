@@ -1,8 +1,8 @@
 ﻿using Abstractions;
-using Abstractions.Product;
+using Abstractions.Products;
 using AutoMapper;
 using Domain.Interfaces;
-using Services.Product;
+using Services.Products;
 
 namespace Services;
 
