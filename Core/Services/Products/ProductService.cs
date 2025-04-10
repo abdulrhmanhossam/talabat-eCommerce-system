@@ -1,10 +1,10 @@
-﻿using Abstractions;
+﻿using Abstractions.Products;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 using Shared.Dtos;
 
-namespace Services;
+namespace Services.Products;
 
 /// <summary>
 /// Provides services for managing products.
