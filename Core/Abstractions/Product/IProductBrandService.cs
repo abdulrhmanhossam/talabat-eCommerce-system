@@ -1,6 +1,6 @@
 ﻿using Shared.Dtos;
 
-namespace Abstractions;
+namespace Abstractions.Product;
 
 /// <summary>
 /// Defines the contract for a service that manages product brands.
