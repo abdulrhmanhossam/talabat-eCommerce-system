@@ -24,10 +24,10 @@ public class ProductBrandController : BaseApiController
     /// </summary>
     /// <returns>A list of product brands if available; otherwise, NotFound response.</returns>
     [HttpGet]
-    public async Task<IActionResult> GetProducts()
+    public async Task<IActionResult> GetProductBrands()
     {
-        var productbrands = await _serviceManager.ProductBrandService.GetAllAsync();
-        return productbrands.Any() ? Ok(productbrands) : NotFound(productbrands);
+        var productBrands = await _serviceManager.ProductBrandService.GetAllAsync();
+        return productBrands.Any() ? Ok(productBrands) : NotFound(productBrands);
     }
 
     /// <summary>
@@ -36,9 +36,9 @@ public class ProductBrandController : BaseApiController
     /// <param name="id">The ID of the product brand.</param>
     /// <returns>The product brand if found; otherwise, NotFound response.</returns>
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetProduct(int id)
+    public async Task<IActionResult> GetProductBrand(int id)
     {
-        var productbrand = await _serviceManager.ProductBrandService.GetByIdAsync(id);
-        return productbrand != null ? Ok(productbrand) : NotFound(productbrand);
+        var productBrand = await _serviceManager.ProductBrandService.GetByIdAsync(id);
+        return productBrand != null ? Ok(productBrand) : NotFound(productBrand);
     }
 }
