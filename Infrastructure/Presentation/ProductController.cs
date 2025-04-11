@@ -6,9 +6,7 @@ namespace Presentation;
 /// <summary>
 /// Handles product-related HTTP requests.
 /// </summary>
-[ApiController]
-[Route("api/[controller]")]
-public class ProductController : ControllerBase
+public class ProductController : BaseApiController
 {
     private readonly IServiceManager _serviceManager;
 
@@ -40,7 +38,7 @@ public class ProductController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetProduct(int id)
     {
-        var data = await _serviceManager.ProductService.GetByIdAsync(id);
-        return data != null ? Ok(data) : NotFound(data);
+        var product = await _serviceManager.ProductService.GetByIdAsync(id);
+        return product != null ? Ok(product) : NotFound(product);
     }
 }
