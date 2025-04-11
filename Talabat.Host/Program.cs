@@ -1,8 +1,10 @@
+using Abstractions;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Persistence.Data;
 using Persistence.Repositories;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,7 @@ builder.Services.AddControllers()
     .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
 builder.Services.AddScoped<IDbInititalizer, DbInititalizer>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IServiceManager, ServiceManager>();
 builder.Services.AddAutoMapper(typeof(Services.AssemblyRefernce).Assembly);
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
