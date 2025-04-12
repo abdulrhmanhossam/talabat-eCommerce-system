@@ -25,26 +25,40 @@ public class GenericRepository<TEntity, TKey>
     }
 
     /// <summary>
-    /// Asynchronously adds a new entity to the database.
+    /// Adds a new entity to the repository.
     /// </summary>
     /// <param name="entity">The entity to add.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    public async Task AddAsync(TEntity entity)
-        => await _dbContext.Set<TEntity>().AddAsync(entity);
+    /// <returns>A task that represents the asynchronous operation. The task result contains the number of state entries written to the database.</returns>
+    public async Task<int> AddAsync(TEntity entity)
+    {
+        _dbContext.Set<TEntity>().Add(entity);
+        return await _dbContext.SaveChangesAsync();
+    }
 
     /// <summary>
-    /// Deletes an entity from the database.
+    /// Deletes an entity by its identifier.
     /// </summary>
-    /// <param name="entity">The entity to delete.</param>
-    public void Delete(TEntity entity)
-        => _dbContext.Set<TEntity>().Remove(entity);
+    /// <param name="id">The identifier of the entity to delete.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the number of state entries written to the database.</returns>
+    /// <exception cref="ItemNotFoundException">Thrown when the entity with the specified identifier is not found.</exception>
+    public async Task<int> DeleteAsync(int id)
+    {
+        var entity = await _dbContext.Set<TEntity>().FindAsync(id)
+            ?? throw new Exception($"Item with {id} is not found");
+        _dbContext.Set<TEntity>().Remove(entity);
+        return await _dbContext.SaveChangesAsync();
+    }
 
     /// <summary>
-    /// Updates an existing entity in the database.
+    /// Updates an existing entity in the repository.
     /// </summary>
     /// <param name="entity">The entity to update.</param>
-    public void Update(TEntity entity)
-        => _dbContext.Set<TEntity>().Update(entity);
+    /// <returns>A task that represents the asynchronous operation. The task result contains the number of state entries written to the database.</returns>
+    public async Task<int> UpdateAsync(TEntity entity)
+    {
+        _dbContext.Set<TEntity>().Update(entity);
+        return await _dbContext.SaveChangesAsync();
+    }
 
     /// <summary>
     /// Retrieves all entities asynchronously with optional tracking.
