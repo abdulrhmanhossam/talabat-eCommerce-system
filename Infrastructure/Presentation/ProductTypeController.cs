@@ -1,5 +1,6 @@
 ﻿using Abstractions;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Dtos;
 
 namespace Presentation;
 
@@ -40,5 +41,36 @@ public class ProductTypeController : BaseApiController
     {
         var productType = await _serviceManager.ProductTypeService.GetByIdAsync(id);
         return productType != null ? Ok(productType) : NotFound(productType);
+    }
+
+    [HttpPost("add")]
+    public async Task<IActionResult> Add(CreateProductTypeDto productType)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        var result = await _serviceManager.ProductTypeService
+            .AddAsync(productType);
+
+        return result.Success ? Ok(result) : BadRequest(result);
+    }
+
+    [HttpPut("update")]
+    public async Task<IActionResult> Update(ProductTypeDto productType)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        var result = await _serviceManager.ProductTypeService
+            .UpdateAsync(productType);
+
+        return result.Success ? Ok(result) : BadRequest(result);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var result = await _serviceManager.ProductTypeService
+            .DeleteAsync(id);
+
+        return result.Success ? Ok(result) : BadRequest(result);
     }
 }
