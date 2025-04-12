@@ -2,6 +2,7 @@
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
+using Shared;
 using Shared.Dtos;
 
 namespace Services.Products;
@@ -46,5 +47,20 @@ public class ProductTypeService : IProductTypeService
         var producttypes = await _unitOfWork
             .GetRepository<ProductType, int>().GetAllAsync();
         return _mapper.Map<IReadOnlyList<ProductTypeDto>>(producttypes);
+    }
+
+    public Task<ServiceResponse> AddAsync(CreateProductTypeDto entity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ServiceResponse> UpdateAsync(ProductTypeDto entity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ServiceResponse> DeleteAsync(int id)
+    {
+        throw new NotImplementedException();
     }
 }
