@@ -1,5 +1,6 @@
 ﻿using Abstractions;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Dtos;
 
 namespace Presentation;
 
@@ -40,5 +41,36 @@ public class ProductBrandController : BaseApiController
     {
         var productBrand = await _serviceManager.ProductBrandService.GetByIdAsync(id);
         return productBrand != null ? Ok(productBrand) : NotFound(productBrand);
+    }
+
+    [HttpPost("add")]
+    public async Task<IActionResult> Add(CreateProductBrandDto productBrand)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        var result = await _serviceManager.ProductBrandService
+            .AddAsync(productBrand);
+
+        return result.Success ? Ok(result) : BadRequest(result);
+    }
+
+    [HttpPut("update")]
+    public async Task<IActionResult> Update(ProductBrandDto productBrand)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        var result = await _serviceManager.ProductBrandService
+            .UpdateAsync(productBrand);
+
+        return result.Success ? Ok(result) : BadRequest(result);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var result = await _serviceManager.ProductBrandService
+            .DeleteAsync(id);
+
+        return result.Success ? Ok(result) : BadRequest(result);
     }
 }
