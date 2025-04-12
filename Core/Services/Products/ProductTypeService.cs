@@ -2,6 +2,7 @@
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
+using Shared;
 using Shared.Dtos;
 
 namespace Services.Products;
@@ -46,5 +47,55 @@ public class ProductTypeService : IProductTypeService
         var producttypes = await _unitOfWork
             .GetRepository<ProductType, int>().GetAllAsync();
         return _mapper.Map<IReadOnlyList<ProductTypeDto>>(producttypes);
+    }
+
+
+    /// <summary>
+    /// Adds a new product type asynchronously.
+    /// </summary>
+    /// <param name="entity">The product type data transfer object.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the service response.</returns>
+    public async Task<ServiceResponse> AddAsync(CreateProductTypeDto entity)
+    {
+        var mappedData = _mapper.Map<ProductType>(entity);
+        int result = await _unitOfWork.GetRepository<ProductType, int>()
+            .AddAsync(mappedData);
+
+        return result > 0
+            ? new ServiceResponse(true, "Product Type Added")
+            : new ServiceResponse(false, "Product Type failed to be Added");
+    }
+
+    /// <summary>
+    /// Updates a product type asynchronously.
+    /// </summary>
+    /// <param name="entity">The product type data transfer object.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the service response.</returns>
+    public async Task<ServiceResponse> UpdateAsync(ProductTypeDto entity)
+    {
+        var productType = await _unitOfWork.GetRepository<ProductType, int>()
+            .GetByIdAsync(entity.Id);
+        var mappedData = _mapper.Map(entity, productType);
+        int result = await _unitOfWork.GetRepository<ProductType, int>()
+            .UpdateAsync(mappedData!);
+
+        return result > 0
+            ? new ServiceResponse(true, "Product Type Updated")
+            : new ServiceResponse(false, "Product Type failed to be Updated");
+    }
+
+    /// <summary>
+    /// Deletes a product type by its identifier asynchronously.
+    /// </summary>
+    /// <param name="id">The product type identifier.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the service response.</returns>
+    public async Task<ServiceResponse> DeleteAsync(int id)
+    {
+        int result = await _unitOfWork.GetRepository<ProductType, int>()
+            .DeleteAsync(id);
+
+        return result > 0
+            ? new ServiceResponse(true, "Product Type Deleted")
+            : new ServiceResponse(false, "Product Type Not Found or failed to be Deleted");
     }
 }
