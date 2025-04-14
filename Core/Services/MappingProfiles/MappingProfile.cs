@@ -21,7 +21,8 @@ public class MappingProfile : Profile
         /// </summary>
         CreateMap<Product, ProductDto>()
             .ForMember(dest => dest.ProductBrand, opt => opt.MapFrom(src => src.ProductBrand.Name))
-            .ForMember(dest => dest.ProductType, opt => opt.MapFrom(src => src.ProductType.Name));
+            .ForMember(dest => dest.ProductType, opt => opt.MapFrom(src => src.ProductType.Name))
+            .ForMember(dest => dest.PictureUrl, opt => opt.MapFrom<ProductUrlResolver>());
 
         /// <summary>
         /// Maps <see cref="ProductBrand"/> to <see cref="ProductBrandDto"/> and vice versa.
