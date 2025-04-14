@@ -15,7 +15,7 @@ public record BaseProductDto
     /// <summary>
     /// Gets or sets the image URL of the product.
     /// </summary>
-    public string ImageUrl { get; set; } = null!;
+    public string PictureUrl { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the price of the product.
