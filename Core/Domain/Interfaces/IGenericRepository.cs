@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.Abstract;
+using Domain.Entities;
 
 namespace Domain.Interfaces;
 
@@ -11,6 +12,8 @@ public interface IGenericRepository<TEntity, TKey> where TEntity : BaseEntity<TK
 {
     Task<TEntity> GetByIdAsync(TKey id);
     Task<IEnumerable<TEntity>> GetAllAsync(bool trackChanges = false);
+    Task<TEntity?> GetEntityWithSpecificationAsync(Specification<TEntity> specification);
+    Task<IEnumerable<TEntity>> GetAllWithSpecificationAsync(Specification<TEntity> specification);
     Task<int> AddAsync(TEntity entity);
     Task<int> UpdateAsync(TEntity entity);
     Task<int> DeleteAsync(int id);

@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.Abstract;
+using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
@@ -83,4 +84,14 @@ public class GenericRepository<TEntity, TKey>
         }
         return entity;
     }
+
+
+    public async Task<TEntity?> GetEntityWithSpecificationAsync(Specification<TEntity> specification)
+        => await ApplySpecification(specification).FirstOrDefaultAsync();
+
+    public async Task<IEnumerable<TEntity>> GetAllWithSpecificationAsync(Specification<TEntity> specification)
+        => await ApplySpecification(specification).AsNoTracking().ToListAsync();
+
+    private IQueryable<TEntity> ApplySpecification(Specification<TEntity> specification)
+        => SpecificationEvaluator.GetQuery(_dbContext.Set<TEntity>().AsQueryable(), specification);
 }
