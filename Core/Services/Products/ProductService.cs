@@ -2,6 +2,7 @@
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
+using Services.Specifications;
 using Shared.Dtos;
 
 namespace Services.Products;
@@ -31,8 +32,10 @@ public class ProductService : IProductService
     /// <returns>A task representing the asynchronous operation, with a read-only list of <see cref="ProductDto"/> as the result.</returns>
     public async Task<IReadOnlyList<ProductDto>> GetAllAsync()
     {
+        var spec = new ProductsWithTypesAndBrandsSpecification();
         var products = await _unitOfWork
-            .GetRepository<Product, int>().GetAllAsync();
+            .GetRepository<Product, int>()
+            .GetAllWithSpecificationAsync(spec);
         return _mapper.Map<IReadOnlyList<ProductDto>>(products);
     }
 
@@ -43,8 +46,10 @@ public class ProductService : IProductService
     /// <returns>A task representing the asynchronous operation, with a <see cref="ProductDto"/> as the result.</returns>
     public async Task<ProductDto> GetByIdAsync(int id)
     {
+        var spec = new ProductsWithTypesAndBrandsSpecification(id);
         var products = await _unitOfWork
-            .GetRepository<Product, int>().GetByIdAsync(id);
+            .GetRepository<Product, int>().
+            GetEntityWithSpecificationAsync(spec);
         return _mapper.Map<ProductDto>(products);
     }
 }
