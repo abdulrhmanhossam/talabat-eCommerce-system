@@ -24,9 +24,9 @@ public class ProductController : BaseApiController
     /// </summary>
     /// <returns>A list of products if found; otherwise, a NotFound response.</returns>
     [HttpGet]
-    public async Task<IActionResult> GetProducts()
+    public async Task<IActionResult> GetProducts(string? sort, int? brandId, int? typeId)
     {
-        var products = await _serviceManager.ProductService.GetAllAsync();
+        var products = await _serviceManager.ProductService.GetAllAsync(sort, brandId, typeId);
         return products.Any() ? Ok(products) : NotFound(products);
     }
 

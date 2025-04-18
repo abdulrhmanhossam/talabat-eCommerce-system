@@ -28,9 +28,34 @@ public abstract class Specification<T> where T : class
     public List<Expression<Func<T, object>>> Includes { get; } = new();
 
     /// <summary>
+    /// Gets the expression used to determine the property to order by (ascending).
+    /// </summary>
+    public Expression<Func<T, object>> OrderBy { get; private set; }
+
+    /// <summary>
+    /// Gets the expression used to determine the property to order by (descending).
+    /// </summary>
+    public Expression<Func<T, object>> OrderByDescending { get; private set; }
+
+
+    /// <summary>
     /// Adds a related entity to include in the query.
     /// </summary>
     /// <param name="includeExpression">The expression representing the related entity to include.</param>
     protected void AddInclude(Expression<Func<T, object>> includeExpression)
         => Includes.Add(includeExpression);
+
+    /// <summary>
+    /// Specifies the property to order the query results by in ascending order.
+    /// </summary>
+    /// <param name="orderExpression">The expression representing the property to sort by.</param>
+    protected void AddOrder(Expression<Func<T, object>> orderExpression)
+        => OrderBy = orderExpression;
+
+    /// <summary>
+    /// Specifies the property to order the query results by in descending order.
+    /// </summary>
+    /// <param name="orderExpression">The expression representing the property to sort by.</param>
+    protected void AddOrderByDescending(Expression<Func<T, object>> orderExpression)
+        => OrderByDescending = orderExpression;
 }
