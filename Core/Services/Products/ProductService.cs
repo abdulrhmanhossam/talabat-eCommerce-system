@@ -30,9 +30,10 @@ public class ProductService : IProductService
     /// Retrieves all products.
     /// </summary>
     /// <returns>A task representing the asynchronous operation, with a read-only list of <see cref="ProductDto"/> as the result.</returns>
-    public async Task<IReadOnlyList<ProductDto>> GetAllAsync()
+    public async Task<IReadOnlyList<ProductDto>> GetAllAsync(string? sort,
+        int? brandId, int? typeId)
     {
-        var spec = new ProductsWithTypesAndBrandsSpecification();
+        var spec = new ProductsWithTypesAndBrandsSpecification(sort, brandId, typeId);
         var products = await _unitOfWork
             .GetRepository<Product, int>()
             .GetAllWithSpecificationAsync(spec);

@@ -24,8 +24,11 @@ public class ProductsWithTypesAndBrandsSpecification : Specification<Product>
     /// Initializes a new instance of the <see cref="ProductsWithTypesAndBrandsSpecification"/> class
     /// to retrieve all products including their brand and type.
     /// </summary>
-    public ProductsWithTypesAndBrandsSpecification()
-        : base(product => true)
+    public ProductsWithTypesAndBrandsSpecification
+        (string? sort, int? brandId, int? typeId)
+        : base(product =>
+        (!brandId.HasValue || product.BrandId == brandId.Value)
+        && (!typeId.HasValue || product.TypeId == typeId))
     {
         AddInclude(product => product.ProductBrand);
         AddInclude(product => product.ProductType);
