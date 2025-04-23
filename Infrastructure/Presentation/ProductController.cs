@@ -1,5 +1,6 @@
 ﻿using Abstractions;
 using Microsoft.AspNetCore.Mvc;
+using Shared;
 
 namespace Presentation;
 
@@ -24,9 +25,10 @@ public class ProductController : BaseApiController
     /// </summary>
     /// <returns>A list of products if found; otherwise, a NotFound response.</returns>
     [HttpGet]
-    public async Task<IActionResult> GetProducts(string? sort, int? brandId, int? typeId)
+    public async Task<IActionResult> GetProducts([FromQuery] ProductSpecParams productParams)
     {
-        var products = await _serviceManager.ProductService.GetAllAsync(sort, brandId, typeId);
+        var products = await _serviceManager.ProductService
+            .GetAllAsync(productParams);
         return products.Any() ? Ok(products) : NotFound(products);
     }
 

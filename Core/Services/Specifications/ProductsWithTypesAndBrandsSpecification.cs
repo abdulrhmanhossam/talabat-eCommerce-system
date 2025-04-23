@@ -1,5 +1,7 @@
 ﻿using Domain.Abstract;
 using Domain.Entities;
+using Shared;
+using Shared.Enums;
 
 namespace Services.Specifications;
 
@@ -24,13 +26,31 @@ public class ProductsWithTypesAndBrandsSpecification : Specification<Product>
     /// Initializes a new instance of the <see cref="ProductsWithTypesAndBrandsSpecification"/> class
     /// to retrieve all products including their brand and type.
     /// </summary>
-    public ProductsWithTypesAndBrandsSpecification
-        (string? sort, int? brandId, int? typeId)
+    public ProductsWithTypesAndBrandsSpecification(ProductSpecParams productParams)
         : base(product =>
-        (!brandId.HasValue || product.BrandId == brandId.Value)
-        && (!typeId.HasValue || product.TypeId == typeId))
+        (!productParams.BrandId.HasValue || product.BrandId == productParams.BrandId.Value)
+        && (!productParams.TypeId.HasValue || product.TypeId == productParams.TypeId.Value))
     {
         AddInclude(product => product.ProductBrand);
         AddInclude(product => product.ProductType);
+        if (productParams.Sort is not null)
+        {
+            switch (productParams.Sort)
+            {
+                case ProductSpecSort.NameAsc:
+                    AddOrder(p => p.Name);
+                    break;
+
+                case ProductSpecSort.NameDesc:
+                    AddOrderByDescending(p => p.Name);
+                    break;
+                case ProductSpecSort.PriceAsc:
+                    AddOrder(p => p.Price);
+                    break;
+                case ProductSpecSort.PriceDesc:
+                    AddOrderByDescending(p => p.Price);
+                    break;
+            }
+        }
     }
 }

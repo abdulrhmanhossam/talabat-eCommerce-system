@@ -1,4 +1,5 @@
-﻿using Shared.Dtos;
+﻿using Shared;
+using Shared.Dtos;
 
 namespace Abstractions.Products;
 
@@ -18,7 +19,7 @@ public interface IProductService
     /// Retrieves all products.
     /// </summary>
     /// <returns>A task representing the asynchronous operation, with a read-only list of <see cref="ProductDto"/> as the result.</returns>
-    Task<IReadOnlyList<ProductDto>> GetAllAsync(string? sort, int? brandId, int? typeId);
+    Task<IReadOnlyList<ProductDto>> GetAllAsync(ProductSpecParams productParams);
 
     ///// <summary>
     ///// Adds a new product.
