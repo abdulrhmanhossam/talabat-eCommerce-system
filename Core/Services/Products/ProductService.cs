@@ -3,6 +3,7 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 using Services.Specifications;
+using Shared;
 using Shared.Dtos;
 
 namespace Services.Products;
@@ -30,10 +31,9 @@ public class ProductService : IProductService
     /// Retrieves all products.
     /// </summary>
     /// <returns>A task representing the asynchronous operation, with a read-only list of <see cref="ProductDto"/> as the result.</returns>
-    public async Task<IReadOnlyList<ProductDto>> GetAllAsync(string? sort,
-        int? brandId, int? typeId)
+    public async Task<IReadOnlyList<ProductDto>> GetAllAsync(ProductSpecParams productParams)
     {
-        var spec = new ProductsWithTypesAndBrandsSpecification(sort, brandId, typeId);
+        var spec = new ProductsWithTypesAndBrandsSpecification(productParams);
         var products = await _unitOfWork
             .GetRepository<Product, int>()
             .GetAllWithSpecificationAsync(spec);
