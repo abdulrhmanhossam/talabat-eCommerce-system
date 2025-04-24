@@ -37,7 +37,22 @@ public abstract class Specification<T> where T : class
     /// </summary>
     public Expression<Func<T, object>> OrderByDescending { get; private set; }
 
+    /// <summary>
+    /// Gets or sets the number of records to skip (used for pagination).
+    /// </summary>
+    public int Skip { get; set; }
 
+    /// <summary>
+    /// Gets or sets the number of records to take (used for pagination).
+    /// </summary>
+    public int Take { get; set; }
+
+    /// <summary>
+    /// Indicates whether pagination is applied to the query.
+    /// </summary>
+    public bool IsPaginated { get; set; }
+
+    #region Methods
     /// <summary>
     /// Adds a related entity to include in the query.
     /// </summary>
@@ -58,4 +73,17 @@ public abstract class Specification<T> where T : class
     /// <param name="orderExpression">The expression representing the property to sort by.</param>
     protected void AddOrderByDescending(Expression<Func<T, object>> orderExpression)
         => OrderByDescending = orderExpression;
+
+    /// <summary>
+    /// Applies pagination parameters to the specification.
+    /// </summary>
+    /// <param name="pageIndex">The current page index (1-based).</param>
+    /// <param name="pageSize">The number of records per page.</param>
+    protected void ApplyPagination(int pageIndex, int pageSize)
+    {
+        IsPaginated = true;
+        Take = pageSize;
+        Skip = (pageIndex - 1) * pageSize;
+    }
+    #endregion
 }
