@@ -33,6 +33,8 @@ public class ProductsWithTypesAndBrandsSpecification : Specification<Product>
     {
         AddInclude(product => product.ProductBrand);
         AddInclude(product => product.ProductType);
+        ApplyPagination(productParams.PageIndex, productParams.PageSize);
+
         if (productParams.Sort is not null)
         {
             switch (productParams.Sort)
