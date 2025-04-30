@@ -94,4 +94,8 @@ public class GenericRepository<TEntity, TKey>
 
     private IQueryable<TEntity> ApplySpecification(Specification<TEntity> specification)
         => SpecificationEvaluator.GetQuery(_dbContext.Set<TEntity>().AsQueryable(), specification);
+
+    public async Task<int> CountAsync(Specification<TEntity> specification)
+        => await SpecificationEvaluator
+        .GetQuery(_dbContext.Set<TEntity>(), specification).CountAsync();
 }
