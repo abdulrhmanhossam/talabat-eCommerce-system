@@ -39,4 +39,6 @@ public class ProductSpecParams
         get => _pageSize;
         set => _pageSize = value > _maxPageSize ? _maxPageSize : value;
     }
+
+    public string? Search { get; set; }
 }

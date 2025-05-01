@@ -31,13 +31,19 @@ public class ProductService : IProductService
     /// Retrieves all products.
     /// </summary>
     /// <returns>A task representing the asynchronous operation, with a read-only list of <see cref="ProductDto"/> as the result.</returns>
-    public async Task<IReadOnlyList<ProductDto>> GetAllAsync(ProductSpecParams productParams)
+    public async Task<PaginatedResult<ProductDto>> GetAllAsync(ProductSpecParams productParams)
     {
         var spec = new ProductsWithTypesAndBrandsSpecification(productParams);
         var products = await _unitOfWork
             .GetRepository<Product, int>()
             .GetAllWithSpecificationAsync(spec);
-        return _mapper.Map<IReadOnlyList<ProductDto>>(products);
+        var productResult = _mapper.Map<IReadOnlyList<ProductDto>>(products);
+        var count = productResult.Count();
+        var totalCount = await _unitOfWork.GetRepository<Product, int>()
+            .CountAsync(new ProductCountSpecifications(productParams));
+        var result = new PaginatedResult<ProductDto>(productParams.PageIndex,
+            productParams.PageSize, totalCount, productResult);
+        return result;
     }
 
     /// <summary>
