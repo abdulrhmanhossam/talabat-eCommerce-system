@@ -39,8 +39,10 @@ public class ProductService : IProductService
             .GetAllWithSpecificationAsync(spec);
         var productResult = _mapper.Map<IReadOnlyList<ProductDto>>(products);
         var count = productResult.Count();
+        var totalCount = await _unitOfWork.GetRepository<Product, int>()
+            .CountAsync(new ProductCountSpecifications(productParams));
         var result = new PaginatedResult<ProductDto>(productParams.PageIndex,
-            productParams.PageSize, count, productResult);
+            productParams.PageSize, totalCount, productResult);
         return result;
     }
 
