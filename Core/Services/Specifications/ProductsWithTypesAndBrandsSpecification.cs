@@ -29,7 +29,9 @@ public class ProductsWithTypesAndBrandsSpecification : Specification<Product>
     public ProductsWithTypesAndBrandsSpecification(ProductSpecParams productParams)
         : base(product =>
         (!productParams.BrandId.HasValue || product.BrandId == productParams.BrandId.Value)
-        && (!productParams.TypeId.HasValue || product.TypeId == productParams.TypeId.Value))
+        && (!productParams.TypeId.HasValue || product.TypeId == productParams.TypeId.Value)
+        && (string.IsNullOrWhiteSpace(productParams.Search) || product.Name.ToLower()
+        .Contains(productParams.Search.ToLower().Trim())))
     {
         AddInclude(product => product.ProductBrand);
         AddInclude(product => product.ProductType);

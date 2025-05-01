@@ -16,7 +16,9 @@ public class ProductCountSpecifications : Specification<Product>
     public ProductCountSpecifications(ProductSpecParams productParams)
         : base(product =>
         (!productParams.BrandId.HasValue || product.BrandId == productParams.BrandId.Value)
-        && (!productParams.TypeId.HasValue || product.TypeId == productParams.TypeId.Value))
+        && (!productParams.TypeId.HasValue || product.TypeId == productParams.TypeId.Value)
+        && (string.IsNullOrWhiteSpace(productParams.Search) || product.Name.ToLower()
+        .Contains(productParams.Search.ToLower().Trim())))
     {
 
     }
